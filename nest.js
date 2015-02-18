@@ -36,7 +36,7 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
             user.save();
             console.log('Status now changed to Away');
             var options = {
-                host: 'www.simplinest.herokuapp.com',
+                host: process.env.SIMPLISAFE_URL,
                 port: 80,
                 path: '/simplisafe/away'
             };
@@ -46,7 +46,7 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
             }).on('error', function(e) {
                     console.log("Got error: " + e.message);
                 });
-            
+
         } else if(nest_status == 'away' && thermostat == 'home'){
             user.nest_status = 'home';
             console.log('Status now changed to Home');
