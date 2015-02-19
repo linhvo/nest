@@ -38,27 +38,29 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
         var structure = firstChild(data.structures);
         var thermostat = structure.away;
         var nest_status = user.nest_status;
-        if (nest_status == 'home' && thermostat == 'away'){
-            user.nest_status = "away";
-            user.save();
-            console.log('Status is changed to Away');
-            var options = {
-                host: process.env.SIMPLISAFE_URL,
-                port: 8000,
-                path: '/simplisafe/away'
-            };
+        if(nest_status !== null){
+            if (nest_status == 'home' && thermostat == 'away'){
+                user.nest_status = "away";
+                user.save();
+                console.log('Status is changed to Away');
+                var options = {
+                    host: process.env.SIMPLISAFE_URL,
+                    port: 8000,
+                    path: '/simplisafe/away'
+                };
 
-            http.get(options, function(res) {
-                console.log("Got response: " + res.statusCode);
-            }).on('error', function(e) {
-                    console.log("Got error: " + e.message);
-                });
+                http.get(options, function(res) {
+                    console.log("Got response: " + res.statusCode);
+                }).on('error', function(e) {
+                        console.log("Got error: " + e.message);
+                    });
 
-        } else if(nest_status == 'away' && thermostat == 'home'){
-            user.nest_status = 'home';
-            console.log('Status is changed to Home');
-        } else {
-            console.log(thermostat + ' is setting')
+            } else if(nest_status == 'away' && thermostat == 'home'){
+                user.nest_status = 'home';
+                console.log('Status is changed to Home');
+            } else {
+                console.log(thermostat + ' is setting')
+            }
         }
     });
     console.log(user);
