@@ -2,7 +2,14 @@ var http = require('http');
 var Firebase = require("firebase");
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/simplisafe');
+var uristring = process.env.MONGOLAB_URI ||'mongodb://localhost/simplisafe';
+mongoose.connect(uristring, function (err, res) {
+    if (err) {
+        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+        console.log ('Succeeded connected to: ' + uristring);
+    }
+});
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -34,10 +41,10 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
         if (nest_status == 'home' && thermostat == 'away'){
             user.nest_status = "away";
             user.save();
-            console.log('Status now changed to Away');
+            console.log('Status is changed to Away');
             var options = {
                 host: process.env.SIMPLISAFE_URL,
-                port: 80,
+                port: 8000,
                 path: '/simplisafe/away'
             };
 
@@ -49,9 +56,9 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
 
         } else if(nest_status == 'away' && thermostat == 'home'){
             user.nest_status = 'home';
-            console.log('Status now changed to Home');
+            console.log('Status is changed to Home');
         } else {
-            console.log('Nothing changes!')
+            console.log(thermostat + ' is setting')
         }
     });
     console.log(user);
