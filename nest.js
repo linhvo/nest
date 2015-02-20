@@ -37,8 +37,9 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
         // thermostat in the first structure
         var structure = firstChild(data.structures);
         var thermostat = structure.away;
-        var nest_status = user.nest_status;
-        if(nest_status !== null){
+        
+        if(user !== null){
+            var nest_status = user.nest_status;
             if (nest_status == 'home' && thermostat == 'away'){
                 user.nest_status = "away";
                 user.save();
