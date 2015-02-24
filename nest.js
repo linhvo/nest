@@ -51,11 +51,9 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
                 };
 
                 http.get(options, function(res) {
-                    console.log(res.header());
                     console.log(options.host);
                     console.log("Got response: " + res.statusCode);
                 }).on('error', function(e) {
-                        console.log(res.header());
                         console.log(options.host);
                         console.log("Got error: " + e.message);
                     });
