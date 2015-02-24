@@ -56,6 +56,7 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
                 }).on('error', function(e) {
                         console.log(options.host);
                         console.log("Got error: " + e.message);
+                        console.log( e.stack );
                     });
 
             } else if(nest_status == 'away' && thermostat == 'home'){
