@@ -46,7 +46,7 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
                 console.log('Status is changed to Away');
                 var options = {
                     host: process.env.SIMPLISAFE_URL,
-                    port: process.env.PORT,
+                    port: process.env.SIMPLINEST_PORT,
                     path: '/simplisafe/away'
                 };
                 http.get(options, function(res) {
