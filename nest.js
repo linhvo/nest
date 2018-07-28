@@ -49,14 +49,14 @@ User.findOne({nest_access_token: nestToken }, function( err, user) {
                     port: process.env.SIMPLINEST_PORT,
                     path: '/simplisafe/away'
                 };
-                http.get(options, function(res) {
-                    console.log(options.host);
-                    console.log("Got response: " + res.statusCode);
-                }).on('error', function(e) {
-                        console.log(options);
-                        console.log("Got error: " + e.message);
-                        console.log( e.stack );
-                    });
+                //http.get(options, function(res) {
+                //    console.log(options.host);
+                //    console.log("Got response: " + res.statusCode);
+                //}).on('error', function(e) {
+                //        console.log(options);
+                //        console.log("Got error: " + e.message);
+                //        console.log( e.stack );
+                //    });
 
             } else if(nest_status == 'away' && thermostat == 'home'){
                 user.nest_status = 'home';
